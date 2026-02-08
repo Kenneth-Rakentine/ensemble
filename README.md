@@ -1,15 +1,25 @@
-# ensemble
-Monome Norns Script: A living, breathing string ensemble that transforms your playing into cascading, weaving voices 
+# ensemble_v11<br>
+fragmenteded string texture generator for norns<br>
+<p align="center">
+  <img src="ensemble-logo.svg" width="360">
+</p>
 
-ENSEMBLE / POLYMORPHIA - PROJECT STATUS DOCUMENT
+
+<br>
+ENSEMBLE v.2.2.0<br>
+post-v.11<br>
+Smooth Grains + Continuous [Final SC Iteration]
+<br>
+
+ENSEMBLE - PROJECT STATUS DOCUMENT<br>
 ================================================
 Version: 2.2.0
 Date: February 6, 2026
 Status: WORKING - Phantom Limb dispersion + smoothing
 
-================================================================================
-TECHNICAL  
-================================================================================
+================================================================================<br>
+TECHNICAL  <br>
+================================================================================<br>
 
 **Manual grains using BufRd + Phasor + EnvGen**
 
@@ -24,9 +34,9 @@ grain = BufRd.ar(2, bufnum, phasor, loop: 1, interpolation: 2) * env;
 
 PlayBuf also works - this is how we confirmed buffers contain audio.
 
-================================================================================
-CURRENT ARCHITECTURE (v2.1.0)
-================================================================================
+================================================================================<br>
+CURRENT ARCHITECTURE (v2.1.0)<br>
+================================================================================<br>
 
 ENGINE: Engine_Polymorphia.sc (SuperCollider)
 SCRIPT: ensemble.lua (Lua)
@@ -70,9 +80,9 @@ CONTROL BUSES:
 - ampBus: Input amplitude for reactivity
 - phaseBus: Write head position for grain following
 
-================================================================================
-PARAMETER MAPPING
-================================================================================
+================================================================================<br>
+PARAMETER MAPPING<br>
+================================================================================<br>
 
 MAIN CONTROLS (Encoders):
 - E1: Blend (0-1) - Crossfades DUST ↔ MASS
@@ -89,9 +99,9 @@ PARAMS MENU:
 - DUST: Gain, Density, Size, Disperse (Phantom Limb effect)
 - Input Gain, Monitor Level, Persistence
 
-================================================================================
-SONIC GOALS (from original blueprint)
-================================================================================
+================================================================================<br>
+SONIC GOALS (from original blueprint)<br>
+================================================================================<br>
 
 TARGET SOUND: Penderecki's "Polymorphia" middle section
 - Hyper-dense string swarm
@@ -111,9 +121,9 @@ STAGED EVOLUTION (implemented in MASS):
 - Stage 2: Shimmer (amplitude wobble at 4-6Hz)
 - Stage 3: Quiver (micro pitch vibrato at 5-7Hz) + stronger comb
 
-================================================================================
-WHAT'S WORKING WELL
-================================================================================
+================================================================================<br>
+WHAT'S WORKING WELL<br>
+================================================================================<br>
 
 ✓ BufRd-based grains produce audio reliably
 ✓ MASS: Long grains with slow attack, formant filtering, comb tension
@@ -128,18 +138,18 @@ WHAT'S WORKING WELL
 ✓ Significant gain boost for better output levels
 ✓ Gentler saturation curve (clip instead of harsh tanh)
 
-================================================================================
-FILE STRUCTURE
-================================================================================
+================================================================================<br>
+FILE STRUCTURE<br>
+================================================================================<br>
 
 dust/code/ensemble/
 ├── ensemble.lua
 └── lib/
     └── Engine_Polymorphia.sc
 
-================================================================================
-SUPERCOLLIDER RULES FOR THIS SYSTEM
-================================================================================
+================================================================================<br>
+SUPERCOLLIDER RULES FOR THIS SYSTEM<br>
+================================================================================<br>
 
 1. All `var` declarations MUST be at TOP of function, before any code
 2. Use BufRd.ar, NOT GrainBuf.ar (GrainBuf broken on this system)
@@ -148,9 +158,9 @@ SUPERCOLLIDER RULES FOR THIS SYSTEM
 5. RecordBuf.ar with run parameter for conditional recording
 6. Use Dust.kr for irregular timing (more organic than Impulse.kr)
 
-================================================================================
-UI STYLE
-================================================================================
+================================================================================<br>
+UI STYLE<br>
+================================================================================<br>
 
 - Minimal: node visualization as main display
 - 8 nodes with connection lines when close
@@ -160,9 +170,9 @@ UI STYLE
 - Help text very dim at bottom
 - Nodes stay within bounds, gentle pull toward center
 
-================================================================================
-INFLUENCES / REFERENCES
-================================================================================
+================================================================================<br>
+INFLUENCES / REFERENCES<br>
+================================================================================<br>
 
 - Penderecki "Polymorphia" - microtonal clusters, sul ponticello, col legno
 - Jonny Greenwood "Proven Lands" - percussive strings, aleatoric lines
@@ -170,26 +180,26 @@ INFLUENCES / REFERENCES
 - KHC (San) - organic fragmentation, distinct fragments
 - Discomfort Designs "Phantom Limb" - random delay dispersion, lo-fi textures
 
-================================================================================
-
-================================================================================
+================================================================================<br>
+<br>
+================================================================================<br>
 
 --
 
 ##OLD VERSION
 --
 
-================================================================================
-1. THE VISION
-================================================================================
+================================================================================<br>
+1. THE VISION<br>
+================================================================================<br>
 
 A living, breathing string ensemble that transforms your playing into cascading, 
 weaving voices using extended techniques - like watching a murmuration of 
 starlings form DNA helixes, or an audio-reactive visualizer rendered as sound.
 
-================================================================================
-1A. THE PARTICLES → SWARM → MASS CONTINUUM
-================================================================================
+================================================================================<br>
+1A. THE PARTICLES → SWARM → MASS CONTINUUM<br>
+================================================================================<br>
 
 Density parameter controls the particle clustering, from sparse Morse code 
 dots to dense undulating mass. Grain/fragment size stays micro (20-50ms) to 
@@ -203,9 +213,9 @@ PERCUSSIVE PATTERN GENERATION:
 • Sustained input = particles maintain 'hovering swarm' quality
 • Undulation from particle placement timing (rhythmic stippling, not smooth grains)
 
-================================================================================
-2. SONIC CHARACTER & INFLUENCES
-================================================================================
+================================================================================<br>
+2. SONIC CHARACTER & INFLUENCES<br>
+================================================================================<br>
 
 2.1 Primary References
 -----------------------
@@ -278,9 +288,9 @@ VISUAL METAPHOR:
 • Braiding, weaving, cascading
 • Throbbing, breathing movement
 
-================================================================================
-3. TECHNICAL BREAKDOWN
-================================================================================
+================================================================================<br>
+3. TECHNICAL BREAKDOWN<br>
+================================================================================<br>
 
 3.1 Fragment Capture Strategy
 ------------------------------
@@ -417,9 +427,9 @@ COHERENCE PRESERVATION:
 • The 'stuck groove' effect is musical because it's a real slice of the input
 • Not random noise, but hyper-focused repetition of a moment
 
-================================================================================
-4. AUDIO-REACTIVE COORDINATE MAPPING (NEW CONCEPT)
-================================================================================
+================================================================================<br>
+4. AUDIO-REACTIVE COORDINATE MAPPING (NEW CONCEPT)<br>
+================================================================================<br>
 
 Inspired by MilkDrop audio visualizers - treating audio processing like vertex 
 shaders and texture mapping algorithms.
