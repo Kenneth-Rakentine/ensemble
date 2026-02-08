@@ -7,7 +7,7 @@ fragmenteded string texture generator for norns<br>
 
 <br>
 ENSEMBLE v.2.2.0<br>
-post-v.11<br>
+[post-v.11]<br>
 Smooth Grains + Continuous [Final SC Iteration]
 <br>
 
