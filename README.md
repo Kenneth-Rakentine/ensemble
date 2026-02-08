@@ -1,6 +1,182 @@
 # ensemble
-Monome Norns Script: A living, breathing string ensemble that transforms your playing into cascading,  weaving voices 
+Monome Norns Script: A living, breathing string ensemble that transforms your playing into cascading, weaving voices 
 
+ENSEMBLE / POLYMORPHIA - PROJECT STATUS DOCUMENT
+================================================
+Version: 2.2.0
+Date: February 6, 2026
+Status: WORKING - Phantom Limb dispersion + smoothing
+
+================================================================================
+TECHNICAL  
+================================================================================
+
+**Manual grains using BufRd + Phasor + EnvGen**
+
+This approach works reliably:
+```supercollider
+trig = Impulse.kr(density);
+pos = TRand.kr(0.05, 0.95, trig) * numFrames;
+phasor = Phasor.ar(trig, BufRateScale.kr(bufnum), pos, pos + (size * SampleRate.ir), pos);
+env = EnvGen.ar(Env.perc(attack, release), trig);
+grain = BufRd.ar(2, bufnum, phasor, loop: 1, interpolation: 2) * env;
+```
+
+PlayBuf also works - this is how we confirmed buffers contain audio.
+
+================================================================================
+CURRENT ARCHITECTURE (v2.1.0)
+================================================================================
+
+ENGINE: Engine_Polymorphia.sc (SuperCollider)
+SCRIPT: ensemble.lua (Lua)
+
+BUFFER: 45 seconds stereo, circular recording with high persistence (preLevel 0.93)
+
+SYNTHS:
+1. \polyRec - Recorder
+   - Records input to circular buffer
+   - Publishes write position to control bus (for write-head following)
+   - Publishes input amplitude to control bus (for reactivity)
+   
+2. \polyMass - MASS layer (4 BufRd voices)
+   - Long grains: 3-6 seconds
+   - Slow attack envelopes (500ms attack, 800ms release)
+   - Reads BEHIND write head (2-8 seconds offset)
+   - Formant-like filtering (3 resonant BPFs at vowel frequencies)
+   - Comb filtering for string tension
+   - STAGED EVOLUTION: shimmer (amplitude wobble) + quiver (pitch vibrato)
+   - LP filter ~3500-5000 Hz
+   - Golden ratio panning with slow LFO drift
+   - Microtonal pitch drift via rate (±1.5-2 cents)
+   - SMOOTHING: LP @ 6kHz + dual allpass diffusion
+   - Gentler saturation (clip instead of tanh)
+   
+3. \polyDust - DUST layer (4 BufRd voices + 6 delay taps)
+   - Short grains: 30-120ms
+   - Quick perc envelopes (3-6ms attack)
+   - Reads close behind write head (20-180ms offset)
+   - HP filter ~250 Hz (gentler sul ponticello)
+   - PHANTOM LIMB DISPERSION: 6 delay taps (80ms-1.8s)
+     - Each tap randomly gated by probability LFO
+     - Progressive LP filtering on longer taps (darkening)
+     - Pan positions drift independently
+     - Creates evolving pointillistic scatter patterns
+   - Density modulated by clusterLfo, swarmLfo, burstLfo
+   - Uses Dust.kr for irregular timing
+   - Smoothing: LP @ 7kHz + allpass diffusion
+
+CONTROL BUSES:
+- ampBus: Input amplitude for reactivity
+- phaseBus: Write head position for grain following
+
+================================================================================
+PARAMETER MAPPING
+================================================================================
+
+MAIN CONTROLS (Encoders):
+- E1: Blend (0-1) - Crossfades DUST ↔ MASS
+- E2: Tension (0-1) - Comb filter strength, string stress
+- E3: Persistence (0.8-0.98) - Buffer feedback/layering
+
+KEYS:
+- K2: Toggle active (record + grains)
+- K3: Clear buffer
+
+PARAMS MENU:
+- Blend, Tension, Movement, Evolve
+- MASS: Gain, Density, Size
+- DUST: Gain, Density, Size, Disperse (Phantom Limb effect)
+- Input Gain, Monitor Level, Persistence
+
+================================================================================
+SONIC GOALS (from original blueprint)
+================================================================================
+
+TARGET SOUND: Penderecki's "Polymorphia" middle section
+- Hyper-dense string swarm
+- Microtonal friction and bow noise
+- Spectral pressure without traditional harmony
+- Slowly breathing, evolving mass
+- Tension without release
+- Murmuration-like swarm intelligence
+
+DUAL NATURE:
+- MASS: Smeared notes that rise, undulate, bow - the "bed" or "fog"
+- DUST: Stippling clusters with percussive friction - surface texture
+
+STAGED EVOLUTION (implemented in MASS):
+- Stage 0: Dry grains
+- Stage 1: Comb stress increases
+- Stage 2: Shimmer (amplitude wobble at 4-6Hz)
+- Stage 3: Quiver (micro pitch vibrato at 5-7Hz) + stronger comb
+
+================================================================================
+WHAT'S WORKING WELL
+================================================================================
+
+✓ BufRd-based grains produce audio reliably
+✓ MASS: Long grains with slow attack, formant filtering, comb tension
+✓ DUST: Phantom Limb-style dispersion (6 delay taps, random gating)
+✓ Write-head following: Grains read what was just recorded
+✓ Input reactivity: DUST density responds to playing dynamics
+✓ Persistence: Old sounds layer and weave until overwritten
+✓ Node visualization responds to input amplitude
+✓ Golden ratio panning creates natural stereo distribution
+✓ Staged evolution: shimmer + quiver modulated by evolve parameter
+✓ Smoothing stage: LP filter + allpass diffusion reduces harshness
+✓ Significant gain boost for better output levels
+✓ Gentler saturation curve (clip instead of harsh tanh)
+
+================================================================================
+FILE STRUCTURE
+================================================================================
+
+dust/code/ensemble/
+├── ensemble.lua
+└── lib/
+    └── Engine_Polymorphia.sc
+
+================================================================================
+SUPERCOLLIDER RULES FOR THIS SYSTEM
+================================================================================
+
+1. All `var` declarations MUST be at TOP of function, before any code
+2. Use BufRd.ar, NOT GrainBuf.ar (GrainBuf broken on this system)
+3. Phasor.ar for position scanning within grain
+4. EnvGen.ar with Env.perc or custom Env for amplitude shaping
+5. RecordBuf.ar with run parameter for conditional recording
+6. Use Dust.kr for irregular timing (more organic than Impulse.kr)
+
+================================================================================
+UI STYLE
+================================================================================
+
+- Minimal: node visualization as main display
+- 8 nodes with connection lines when close
+- Status top left ("ACTIVE"/"STANDBY")
+- Blend indicator top right (DUST/MIX/MASS)
+- Input meter bottom left
+- Help text very dim at bottom
+- Nodes stay within bounds, gentle pull toward center
+
+================================================================================
+INFLUENCES / REFERENCES
+================================================================================
+
+- Penderecki "Polymorphia" - microtonal clusters, sul ponticello, col legno
+- Jonny Greenwood "Proven Lands" - percussive strings, aleatoric lines
+- Jan Jelinek "Loop Finding Jazz Records" - micro-loops, stuttering textures
+- KHC (San) - organic fragmentation, distinct fragments
+- Discomfort Designs "Phantom Limb" - random delay dispersion, lo-fi textures
+
+================================================================================
+
+================================================================================
+
+--
+
+##OLD VERSION
 --
 
 ================================================================================
