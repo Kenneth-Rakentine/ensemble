@@ -1,4 +1,4 @@
-# ensemble_v2.2.0<br>
+# ensemble_v3.0.0<br>
 fragmenteded string texture generator for norns<br>
 <p align="center">
   <img src="ensemble-logo.svg" width="360">
@@ -6,7 +6,7 @@ fragmenteded string texture generator for norns<br>
 
 
 <br>
-ENSEMBLE v.2.2.0<br>
+ENSEMBLE v.3.0.0<br>
 [post-v.11]<br>
 Smooth Grains + Continuous [Final SC Iteration]
 <br>
