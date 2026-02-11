@@ -6,7 +6,7 @@ fragmenteded string texture generator for norns<br>
 
 
 # ENSEMBLE — String Texture Generator
-
+http://ensemble.surge.sh/
 ## Comprehensive Blueprint v3.0
 
 **Script Version:** v3.0.0 (Continuous Texture Weave Architecture)  
