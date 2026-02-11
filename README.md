@@ -40,11 +40,11 @@ fragmenteded string texture generator for norns<br>
 
 ## 1. The Vision
 
-A living, breathing string ensemble that transforms your playing into cascading, weaving voices using extended techniques — like watching a murmuration of starlings form DNA helixes, or an audio-reactive visualizer rendered as sound.
+A living, breathing string ensemble that transforms your playing into cascading, weaving voices using extended techniques; like watching a murmuration of starlings form DNA helixes, or an audio-reactive visualizer rendered as sound.
 
 **In one sentence:**
 
-> "A slowly breathing, hyper-dense string swarm made of microtonal friction, bow noise, and spectral pressure — an evolving orchestral organism rather than a composition."
+> "A slowly breathing, hyper-dense string swarm made of microtonal friction, bow noise, and spectral pressure; an evolving orchestral organism rather than a composition."
 
 ### The Particles → Swarm → Mass Continuum
 
@@ -65,7 +65,7 @@ These two textures coexist and interweave, controlled by the Blend parameter.
 
 ### The Call & Response
 
-The system decides when and where to place particles based on input dynamics. This is not a looper — it is a living organism that listens to what you play and responds with its own interpretation:
+The system decides when and where to place particles based on input dynamics. This is not a looper, it is a living organism that listens to what you play and responds with its own interpretation:
 
 - Louder transients = denser particle clouds
 - Sustained input = hovering swarm quality
